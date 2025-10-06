@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  # Application Service (Production)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: acquisitions-app-prod
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env.production
+    networks:
+      - acquisitions-network
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'node',
+          '-e',
+          "require('http').request({hostname:'localhost',port:3000,path:'/health'},r=>r.statusCode==200?process.exit(0):process.exit(1)).end()",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    # Security: Run as non-root user
+    user: '1001:1001'
+    # Resource limits for production
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    # Enable logging driver for production monitoring
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '10m'
+        max-file: '3'
+
+networks:
+  acquisitions-network:
+    driver: bridge
