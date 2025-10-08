@@ -9,6 +9,7 @@ This is a Node.js Express API for an acquisitions system with user authenticatio
 ## Development Commands
 
 ### Core Development
+
 - `npm run dev` - Start development server with file watching
 - `npm run lint` - Check code style with ESLint
 - `npm run lint:fix` - Fix auto-fixable ESLint issues
@@ -16,11 +17,13 @@ This is a Node.js Express API for an acquisitions system with user authenticatio
 - `npm run format:check` - Check if code is properly formatted
 
 ### Database Operations
+
 - `npm run db:generate` - Generate database migrations from schema changes
 - `npm run db:migrate` - Apply pending migrations to database
 - `npm run db:studio` - Open Drizzle Studio for database management
 
 ### Testing Individual Components
+
 - Test authentication endpoints: `curl -X POST http://localhost:3000/api/auth/sign-up -H "Content-Type: application/json" -d '{"name":"Test","email":"test@example.com","password":"password123"}'`
 - Check health endpoint: `curl http://localhost:3000/health`
 - View logs: `tail -f logs/combined.log`
@@ -28,7 +31,9 @@ This is a Node.js Express API for an acquisitions system with user authenticatio
 ## Architecture
 
 ### Layer Structure
+
 The application follows a clean separation of concerns with these layers:
+
 - **Routes** (`src/routes/`) - HTTP endpoint definitions and route handlers
 - **Controllers** (`src/controllers/`) - Request/response handling and orchestration
 - **Services** (`src/services/`) - Business logic and data operations
@@ -38,6 +43,7 @@ The application follows a clean separation of concerns with these layers:
 - **Utils** (`src/utils/`) - Shared utility functions
 
 ### Key Architectural Patterns
+
 - **Import Mapping**: Uses Node.js import maps (# prefix) for clean internal imports (e.g., `#config/*`, `#controllers/*`)
 - **Error Handling**: Consistent error logging with Winston and structured error responses
 - **Authentication**: JWT-based auth with secure HTTP-only cookies
@@ -45,6 +51,7 @@ The application follows a clean separation of concerns with these layers:
 - **Database**: PostgreSQL with Drizzle ORM for type-safe database operations
 
 ### Authentication Flow
+
 - Users authenticate via `/api/auth/sign-in` endpoint
 - JWT tokens stored in HTTP-only cookies for security
 - Role-based access control with 'user' and 'admin' roles
@@ -52,6 +59,7 @@ The application follows a clean separation of concerns with these layers:
 - Role restrictions enforced by `requireRole` middleware
 
 ### Database Schema
+
 - Single `users` table with fields: id, name, email, password (hashed), role, timestamps
 - Uses Neon serverless PostgreSQL database
 - Drizzle ORM provides type-safe database queries and schema management
@@ -59,6 +67,7 @@ The application follows a clean separation of concerns with these layers:
 ## Environment Configuration
 
 Required environment variables (see `.env.example`):
+
 - `PORT` - Server port (defaults to 3000)
 - `NODE_ENV` - Environment mode (development/production)
 - `LOG_LEVEL` - Winston logging level
@@ -78,6 +87,7 @@ Required environment variables (see `.env.example`):
 ## Common Development Workflows
 
 ### Adding New Features
+
 1. Create route in appropriate routes file
 2. Add controller function with validation
 3. Implement business logic in service layer
@@ -85,12 +95,14 @@ Required environment variables (see `.env.example`):
 5. Update middleware if cross-cutting concerns involved
 
 ### Database Changes
+
 1. Modify schema in `src/models/*.js`
 2. Run `npm run db:generate` to create migration
 3. Run `npm run db:migrate` to apply changes
 4. Test with `npm run db:studio` to verify schema
 
 ### Authentication-Protected Endpoints
+
 Use `authenticateToken` middleware for login requirement and `requireRole(['admin'])` for role-specific access.
 
 ## File Structure Context

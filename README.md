@@ -69,6 +69,7 @@ cp .env.example .env.production
 ### 3. Update Environment Files
 
 #### `.env.development`
+
 ```bash
 # Update these with your actual Neon credentials
 NEON_API_KEY=neon_api_1234567890abcdef
@@ -80,6 +81,7 @@ JWT_SECRET=your-development-jwt-secret-here
 ```
 
 #### `.env.production`
+
 ```bash
 # Update with your production Neon connection string
 DATABASE_URL=postgres://username:password@ep-xyz-123.us-east-1.neon.tech/your_database_name?sslmode=require
@@ -185,10 +187,12 @@ npm run db:studio
 ### Database Access
 
 #### Development (Neon Local)
+
 - **Connection**: `postgres://neondb_owner:password@localhost:5432/neondb`
 - **Features**: Ephemeral branches, local proxy
 
 #### Production (Neon Cloud)
+
 - **Connection**: Your Neon Cloud connection string
 - **Features**: Serverless, auto-scaling, branching
 
@@ -238,29 +242,29 @@ docker-compose -f docker-compose.dev.yml down -v
 
 ### Application Variables
 
-| Variable | Development | Production | Description |
-|----------|-------------|------------|-------------|
-| `NODE_ENV` | `development` | `production` | Environment mode |
-| `PORT` | `3000` | `3000` | Server port |
-| `LOG_LEVEL` | `debug` | `warn` | Logging level |
+| Variable    | Development   | Production   | Description      |
+| ----------- | ------------- | ------------ | ---------------- |
+| `NODE_ENV`  | `development` | `production` | Environment mode |
+| `PORT`      | `3000`        | `3000`       | Server port      |
+| `LOG_LEVEL` | `debug`       | `warn`       | Logging level    |
 
 ### Database Variables
 
-| Variable | Development | Production | Description |
-|----------|-------------|------------|-------------|
-| `DATABASE_URL` | Neon Local | Neon Cloud | Database connection string |
-| `NEON_API_KEY` | Required | Not used | Neon API key for Local |
-| `NEON_PROJECT_ID` | Required | Not used | Neon project ID |
-| `PARENT_BRANCH_ID` | `main` | Not used | Parent branch for ephemeral branches |
+| Variable           | Development | Production | Description                          |
+| ------------------ | ----------- | ---------- | ------------------------------------ |
+| `DATABASE_URL`     | Neon Local  | Neon Cloud | Database connection string           |
+| `NEON_API_KEY`     | Required    | Not used   | Neon API key for Local               |
+| `NEON_PROJECT_ID`  | Required    | Not used   | Neon project ID                      |
+| `PARENT_BRANCH_ID` | `main`      | Not used   | Parent branch for ephemeral branches |
 
 ### Security Variables
 
-| Variable | Development | Production | Description |
-|----------|-------------|------------|-------------|
-| `JWT_SECRET` | Development key | **Strong production key** | JWT signing secret |
-| `JWT_EXPIRES_IN` | `7d` | `24h` | JWT expiration |
-| `BCRYPT_ROUNDS` | `10` | `12` | Password hashing rounds |
-| `ARKJET_KEY` | Optional | Required | Arcjet security key |
+| Variable         | Development     | Production                | Description             |
+| ---------------- | --------------- | ------------------------- | ----------------------- |
+| `JWT_SECRET`     | Development key | **Strong production key** | JWT signing secret      |
+| `JWT_EXPIRES_IN` | `7d`            | `24h`                     | JWT expiration          |
+| `BCRYPT_ROUNDS`  | `10`            | `12`                      | Password hashing rounds |
+| `ARKJET_KEY`     | Optional        | Required                  | Arcjet security key     |
 
 ## 🧪 Testing
 
@@ -280,6 +284,7 @@ npm run format
 ### Common Issues
 
 #### 1. Neon Local Connection Issues
+
 ```bash
 # Check Neon Local container logs
 docker logs neon-local
@@ -289,6 +294,7 @@ docker exec -it neon-local env | grep NEON
 ```
 
 #### 2. Database Connection Errors
+
 ```bash
 # Test database connectivity
 docker exec -it acquisitions-app-dev npm run db:migrate
@@ -298,6 +304,7 @@ echo $DATABASE_URL
 ```
 
 #### 3. Container Build Failures
+
 ```bash
 # Clear Docker cache
 docker system prune -a
@@ -307,6 +314,7 @@ docker-compose -f docker-compose.dev.yml build --no-cache
 ```
 
 #### 4. Permission Issues
+
 ```bash
 # Fix file permissions
 chmod +x scripts/*
